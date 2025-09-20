@@ -28,6 +28,9 @@ and a clean Material 3 UI.
     - Custom color
 - 🗑 **Delete events** with a long press
 - 🌗 **Light & Dark mode** support
+- 💾 **Backup & Restore** timetable data:
+    - Export all events to a `.json` file
+    - Import events from a saved backup
 - 📂 **Persistent storage** with SQLite (`sqflite` package)
 
 ---
@@ -49,6 +52,9 @@ Here are some previews of the app in action:
 2. Tap the ➕ **Floating Action Button** → create a new event.
 3. Fill in details → save → event appears in the timetable.
 4. Long-press on any event → delete it.
+5. Open the **menu (⋮)** in the top-right corner:
+   - Select **Backup** → export all events to a `.json` file
+   - Select **Restore** → pick a previously saved `.json` file to import events
 
 ---
 
