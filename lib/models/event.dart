@@ -5,7 +5,7 @@ part 'event.g.dart'; // generated adapter will live here
 @HiveType(typeId: 0) // unique typeId per model
 class Event extends HiveObject {
   @HiveField(0)
-  int? id; // optional, Hive already assigns a key
+  int? id;
 
   @HiveField(1)
   String title;

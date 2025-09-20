@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:hive/hive.dart';
+
 import 'models/event.dart';
 
 class EventRepository {
@@ -27,14 +29,18 @@ class EventRepository {
 
   /// Backup
   static Future<String> exportToJson() async {
-    final maps = _box.values.map((e) => {
-      'id': e.key, // Hive auto key
-      'title': e.title,
-      'day': e.day,
-      'startMinutes': e.startMinutes,
-      'endMinutes': e.endMinutes,
-      'colorValue': e.colorValue,
-    }).toList();
+    final maps = _box.values
+        .map(
+          (e) => {
+            'id': e.key, // Hive auto key
+            'title': e.title,
+            'day': e.day,
+            'startMinutes': e.startMinutes,
+            'endMinutes': e.endMinutes,
+            'colorValue': e.colorValue,
+          },
+        )
+        .toList();
     return jsonEncode(maps);
   }
 
@@ -43,13 +49,16 @@ class EventRepository {
     final decoded = jsonDecode(jsonString) as List;
     await _box.clear();
     for (final m in decoded) {
-      await _box.add(Event(
+      final event = Event(
         title: m['title'],
         day: m['day'],
         startMinutes: m['startMinutes'],
         endMinutes: m['endMinutes'],
         colorValue: m['colorValue'],
-      ));
+      );
+      final key = await _box.add(event);
+      event.id = key;
+      await event.save();
     }
   }
 }
