@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="fastlane.lanes">
+    
+    
+    
+      
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.0002341">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="1: flutter clean" time="0.416921094">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="2: flutter pub get" time="2.733408838">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="3: flutter build apk --release" time="36.439843899">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="4: zipalign -v -p 4 /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release.apk /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release-aligned.apk" time="0.031937642">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="5: apksigner sign --ks /home/peter/.keys/wikly-key.jks --ks-key-alias key0 --ks-pass pass:False.11 --key-pass pass:False.11 --out /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release-signed.apk /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release-aligned.apk" time="0.743433616">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="6: apksigner verify /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release-signed.apk" time="0.696363331">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="7: mkdir -p /home/peter/Desktop" time="0.001377933">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="8: cp /home/peter/AndroidStudioProjects/wikly/build/app/outputs/flutter-apk/app-release-signed.apk &quot;/home/peter/Desktop/Wikly v1.0.0-beta.apk&quot;" time="0.001973241">
+        
+      </testcase>
+    
+  </testsuite>
+</testsuites>

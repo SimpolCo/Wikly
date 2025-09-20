@@ -1,0 +1,1 @@
+<p><i>Wikly</i> is a lightweight, open source Android app that helps you quickly create, view, and manage your weekly timetable with a clean Material 3 interface, light/dark modes, and local SQLite storage.</p>

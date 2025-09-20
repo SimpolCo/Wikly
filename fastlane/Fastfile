@@ -1,0 +1,53 @@
+default_platform(:android)
+
+platform :android do
+  desc "Build and sign release APK with custom output path and name (Flutter)"
+  lane :release do |options|
+    output_path = options[:path] || "release"
+    output_name = options[:apk_name] || "Wikly.apk"
+
+    # Build the Flutter release APK
+    sh("flutter clean")
+    sh("flutter pub get")
+    sh("flutter build apk --release")
+
+    unsigned_apk = File.expand_path("../build/app/outputs/flutter-apk/app-release.apk")
+    aligned_apk   = File.expand_path("../build/app/outputs/flutter-apk/app-release-aligned.apk")
+    signed_apk    = File.expand_path("../build/app/outputs/flutter-apk/app-release-signed.apk")
+
+    sleep(1)
+
+    unless File.exist?(unsigned_apk)
+      UI.user_error!("❌ APK not found at: #{unsigned_apk}")
+    end
+
+    sh("zipalign -v -p 4 #{unsigned_apk} #{aligned_apk}")
+
+    keystore_path = File.expand_path(ENV["KEYSTORE_PATH"])
+    key_alias = ENV["KEY_ALIAS"]
+    keystore_password = ENV["KEYSTORE_PASSWORD"]
+    key_password = ENV["KEY_PASSWORD"]
+
+    sh "apksigner sign " \
+       "--ks #{keystore_path} " \
+       "--ks-key-alias #{key_alias} " \
+       "--ks-pass pass:#{keystore_password} " \
+       "--key-pass pass:#{key_password} " \
+       "--out #{signed_apk} #{aligned_apk}"
+
+    sh("apksigner verify #{signed_apk}")
+
+    require 'digest'
+    sha256 = Digest::SHA256.file(signed_apk).hexdigest
+    puts("🔐 SHA256: #{sha256}")
+
+    target_path = File.expand_path(File.join(output_path, output_name))
+    sh("mkdir -p #{File.dirname(target_path)}")
+    sh("cp #{signed_apk} \"#{target_path}\"")
+
+    UI.success("✅ Release APK built and signed: #{target_path}")
+  end
+end
+
+# For Example Run with :
+# $ bundle exec fastlane android release path:"~/Desktop" apk_name:"Wikly v1.1.1.apk"
