@@ -1,7 +1,7 @@
 name: Wikly
 description: "A Simple Weekly Timetable Management App"
 publish_to: 'none'
-version: 1.0.0-beta
+version: 1.0.0
 environment:
   sdk: ^3.8.1
 
